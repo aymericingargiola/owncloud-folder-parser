@@ -89,6 +89,7 @@ function buildJson(filelist) {
         itemDatas = {
             "id": item.id,
             "fileName": name,
+            "name": cleanName,
             "filter": filter,
             "extension": extension,
             "mimetype": item.mimetype,
