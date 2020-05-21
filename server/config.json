@@ -7,7 +7,7 @@
             "path": "",
             "extension": ".jpg"
         },
-        "saveJsonPath": ""
+        "saveJsonPath": "./playlist.json"
     },
     "serverSettings": {
         "host": "127.0.0.1",
