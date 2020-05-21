@@ -73,9 +73,9 @@ function buildJson(filelist) {
     filelist.forEach(function (item) {
         let name, cleanName, extension, artist, title, filter, url, bytes;
         name = item.name.replace(/ +/g, ' ').replace(/\n/g, '').trim();
-        cleanName = name.substr(0, name.lastIndexOf(".")).trim();
+        cleanName = name.lastIndexOf(".") != -1 ? name.substr(0, name.lastIndexOf(".")).trim() : name;
         filter = cleanName.replace(/[-.()]/g, "").replace(/ +/g, ' ').toLowerCase();
-        extension = name.substr(name.lastIndexOf(".") + 1).trim();
+        extension = name.lastIndexOf(".") != -1 ? name.substr(name.lastIndexOf(".") + 1).trim() : item.mimetype.match(/^(httpd\/unix-directory)$/) ? "zip" : "";
         url = item.url;
         bytes = item.size;
         if (extension.match(/^(mp3|wav|ogg|flac|wma|mid)$/)) {
@@ -91,6 +91,7 @@ function buildJson(filelist) {
             "fileName": name,
             "filter": filter,
             "extension": extension,
+            "mimetype": item.mimetype,
             "url": url,
             "bytes": bytes,
             "size": globalFunctions.bytesToSize(bytes),
