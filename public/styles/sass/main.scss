@@ -1,13 +1,16 @@
+@import "./abstract/icons";
+
+* {
+    box-sizing: border-box;
+}
+
 html {
     height: 100%;
     width: 100%;
+    overflow: hidden;
 }
 
 body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     height: 100%;
     width: 100%;
     padding: 12px;
@@ -15,7 +18,16 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     background-color: #2b2b2b;
     color: rgba(195, 204, 211, 1);
-    box-sizing: border-box;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
 }
 
 .form-group {
@@ -26,10 +38,14 @@ body {
     input {
         color: rgba(195, 204, 211, 1);
         padding: 12px;
-        border: 1px solid rgba(73, 255, 164, 0.9);
+        border: 1px solid rgba(0, 0, 0, 0.3);
         background-color: rgba(255, 255, 255, 0.05);
         width: 100%;
         border-radius: 6px;
+        transition: 0.5s ease;
+        &:focus {
+            box-shadow: 0px 0px 15px rgba(73, 255, 164, 0.4);
+        }
     }
 }
 
@@ -82,7 +98,7 @@ body {
     overflow: auto;
     background: #2b2b2b;
     color: rgba(195, 204, 211, 1);
-    border: 1px solid rgba(73, 255, 164, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.3);
     resize: none;
     border-radius: 6px;
     background-color: rgba(255, 255, 255, 0.05);
@@ -93,6 +109,214 @@ body {
     }
     &:hover {
         cursor: default;
+    }
+}
+
+.item-list-container {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    height: 100vh;
+    width: 25vw;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
+    padding: 12px;
+    overflow: visible;
+    background-color: rgba(54, 54, 54, 1);
+    transition: 1s ease;
+    transform: translateX(100%);
+    @supports ((-webkit-backdrop-filter: blur(5px)) or (backdrop-filter: blur(5px))) {
+        background-color: rgba(255, 255, 255, 0.05);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+    }
+    &.visible {
+        transform: translateX(0%);
+    }
+    .hide-button,
+    .show-button {
+        position: absolute;
+        left: -50px;
+        top: 0px;
+        width: 50px;
+        height: 50px;
+        background-color: black;
+        background-image: url($icon-chevron-right);
+        background-position: center;
+        background-size: 50%;
+        background-repeat: no-repeat;
+        background-color: rgba(54, 54, 54, 1);
+        transition: 0.5s ease;
+        box-shadow: -8px 4px 15px rgba(0, 0, 0, 0.3);
+        @supports ((-webkit-backdrop-filter: blur(5px)) or (backdrop-filter: blur(5px))) {
+            background-color: rgba(255, 255, 255, 0.05);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+        &.disabled {
+            opacity: 0;
+            pointer-events: none;
+        }
+        &::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-image: url($icon-chevron-right-green);
+            background-position: center;
+            background-size: 50%;
+            background-repeat: no-repeat;
+            transition: 0.5s ease;
+            opacity: 0;
+        }
+        &:hover {
+            cursor: pointer;
+            &::after {
+                opacity: 1;
+            }
+        }
+    }
+    .show-button {
+        background-image: url($icon-chevron-left);
+        &::after {
+            background-image: url($icon-chevron-left-green);
+        }
+    }
+    .item-list-content {
+        overflow: auto;
+        overflow-x: hidden;
+        height: 100%;
+        .item-list {
+            padding: 12px;
+            height: 100%;
+            margin: 0px;
+            list-style: none;
+            .item {
+                position: relative;
+                background-color: #2b2b2b;
+                border-radius: 6px;
+                box-shadow: 0px 0px 15px rgba(0, 0, 0, 0);
+                transition: 1s ease;
+                animation: left-to-right 1.5s;
+                &:not(:first-child) {
+                    margin-top: 12px;
+                }
+                .item-container {
+                    color: inherit;
+                    text-decoration: none;
+                    padding: 24px;
+                    display: block;
+                    .info-bar {
+                        position: absolute;
+                        bottom: 0;
+                        left: 0;
+                        width: 100%;
+                        font-size: 11px;
+                        text-align: right;
+                        padding: 4px;
+                        overflow: hidden;
+                        .small-info {
+                            //background-color: rgba(54, 54, 54, 1);
+                            padding: 4px;
+                            pointer-events: none;
+                            transition: 0.5s ease;
+                            transform: translateY(100%);
+                            display: inline-block;
+                            opacity: 0;
+                            &:not(:first-child) {
+                                margin-left: 4px;
+                            }
+                            &:nth-child(2) {
+                                transition-delay: 0.1s;
+                            }
+                            &:nth-child(3) {
+                                transition-delay: 0.2s;
+                            }
+                            &:nth-child(4) {
+                                transition-delay: 0.3s;
+                            }
+                        }
+                    }
+                    .item-content {
+                        display: flex;
+                        flex-direction: row;
+                        .image {
+                            position: relative;
+                            flex-shrink: 0;
+                            width: 50px;
+                            height: 50px;
+                            background: rgba(255, 255, 255, 0.05);
+                            background-image: url($icon-document);
+                            background-position: center;
+                            background-size: 50%;
+                            background-repeat: no-repeat;
+                            margin-right: 24px;
+                            border-radius: 50px;
+                            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+                            transition: 1s ease;
+                            &::after {
+                                content: "";
+                                position: absolute;
+                                width: 100%;
+                                height: 100%;
+                                top: 0;
+                                left: 0;
+                                background-image: url($icon-document-green);
+                                background-position: center;
+                                background-size: 50%;
+                                background-repeat: no-repeat;
+                                transition: 1s ease;
+                                opacity: 0;
+                            }
+                            &[data-type="mp3"],
+                            &[data-type="ogg"],
+                            &[data-type="wav"],
+                            &[data-type="flac"] {
+                                background-image: url($icon-music);
+                                &::after {
+                                    background-image: url($icon-music-green);
+                                }
+                            }
+                            &[data-type="zip"],
+                            &[data-type="rar"],
+                            &[data-type="bin"],
+                            &[data-type="tar"],
+                            &[data-type="7z"],
+                            &[data-type="wim"] {
+                                background-image: url($icon-zip);
+                                &::after {
+                                    background-image: url($icon-zip-green);
+                                }
+                            }
+                        }
+                        .info {
+                            display: flex;
+                            align-items: center;
+                        }
+                    }
+                }
+                &:hover {
+                    box-shadow: 0px 0px 15px rgba(73, 255, 164, 0.4);
+                    .item-container {
+                        .info-bar {
+                            .small-info {
+                                transform: translateY(0%);
+                                opacity: 0.5;
+                            }
+                        }
+                        .item-content {
+                            .image {
+                                box-shadow: 0px 0px 15px rgba(73, 255, 164, 0.4);
+                                &::after {
+                                    opacity: 0.7;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
