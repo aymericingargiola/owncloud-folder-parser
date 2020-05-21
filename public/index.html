@@ -9,17 +9,26 @@
 </head>
 
 <body>
-    <h1>Generate JSON file list from public Owncloud folder</h1>
-    <div class="actions">
-        <a id="generatejson" class="button download">Generate JSON</a>
-        <a id="downloadjson" class="button download disabled">Save JSON</a>
-        <a id="openlink" target="_blank" class="button link">Open link</a>
+    <div class="content">
+        <h1>Generate JSON file list from public Owncloud folder</h1>
+        <div class="actions">
+            <a id="generatejson" class="button download">Generate JSON</a>
+            <a id="downloadjson" class="button download disabled">Save JSON</a>
+            <a id="openlink" target="_blank" class="button link">Open link</a>
+        </div>
+        <div class="form-group">
+            <input id="url-input" type="text"
+                value="https://zatanna.useed.fr/SB869/owncloud/index.php/s/FxWBSqPLgkHCrqQ?path=%2FLazerzF!ne"></input>
+        </div>
+        <textarea id="json" spellcheck="false" readonly></textarea>
     </div>
-    <div class="form-group">
-        <input id="url-input" type="text"
-            value="https://zatanna.useed.fr/SB869/owncloud/index.php/s/FxWBSqPLgkHCrqQ?path=%2FLazerzF!ne"></input>
+    <div class="item-list-container">
+        <span class="hide-button disabled"></span>
+        <span class="show-button"></span>
+        <div class="item-list-content">
+            <ul class="item-list"></ul>
+        </div>
     </div>
-    <textarea id="json" spellcheck="false" readonly></textarea>
 </body>
 <script src="scripts/index.min.js"></script>
 
