@@ -1,6 +1,8 @@
 # Node.js Owncloud Folder Parser
 This is a fun project to parse Owncloud shared folders with Node.js and PhantomJS instead of Owncloud API and return a json. I'm using it to create music playlist and direct stream from Owncloud download urls to a website. You can use the browser user interface or directly parse and save the json with url and path configured in `config.json`.
 
+Exemple based on my shared public folder for my "LazerzF!ne" music project (cause, yeah i'm  [music producer](https://www.youtube.com/channel/UCHhdhKc4nOABGdqtEvqpsTw) :smile: ): https://zatanna.useed.fr/SB869/owncloud/index.php/s/FxWBSqPLgkHCrqQ?path=%2FLazerzF!ne
+
 ## Configure
 You can configure `server\config.json` :
 
