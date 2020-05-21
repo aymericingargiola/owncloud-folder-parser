@@ -23,13 +23,19 @@ function writeJson(newFileList) {
         if (error) {
             console.error("\nError:  " + error.message);
         } else {
-            console.log("\nFile list writed on " + saveJsonPath);
+            console.log("\nFile writed on " + path.resolve(saveJsonPath));
         }
     });
 }
 
 function checkFiles(newFileList) {
-    if (fs.existsSync(saveJsonPath) && config.saveJsonPath != "") {
+    let fileExist;
+    try {
+        fileExist = fs.existsSync(saveJsonPath);
+    } catch (err) {
+        fileExist = false;
+    }
+    if (fileExist && saveJsonPath != "") {
         console.group("\File list already exist, check files:");
         console.time("Time");
         var newFiles = 0;
@@ -54,8 +60,10 @@ function checkFiles(newFileList) {
         if (newFiles != 0 || oldFiles != 0) {
             writeJson(newFileList);
         }
-    } else if (config.saveJsonPath != "") {
+    } else if (saveJsonPath != "") {
         writeJson(newFileList);
+    } else {
+        console.log("No path in config.json to save the json, the file was not saved.");
     }
 }
 
@@ -180,7 +188,7 @@ inquirer.prompt([
 ]).then(answers => {
     const initOptions = {
         runServer: (answers.runServer.toLowerCase() === "y" || answers.runServer.toLowerCase() === "yes" ? true : false),
-        openUi: (answers.openUi ? (answers.openUi.toLowerCase() === "y" || answers.openUi.toLowerCase() === "yes" ? true : false) : false),
+        openBui: (answers.openBui ? (answers.openBui.toLowerCase() === "y" || answers.openBui.toLowerCase() === "yes" ? true : false) : false),
         checkFiles: (answers.checkFiles.toLowerCase() === "y" || answers.checkFiles.toLowerCase() === "yes" ? true : false),
     };
     init(initOptions);
