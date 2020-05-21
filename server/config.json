@@ -1,0 +1,16 @@
+{
+    "userSettings": {
+        "defaultUrl": {
+            "url": "https://zatanna.useed.fr/SB869/owncloud/index.php/s/FxWBSqPLgkHCrqQ?path=%2FLazerzF!ne"
+        },
+        "thumbnail": {
+            "path": "",
+            "extension": ".jpg"
+        },
+        "saveJsonPath": ""
+    },
+    "serverSettings": {
+        "host": "127.0.0.1",
+        "port": "1337"
+    }
+}

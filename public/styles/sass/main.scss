@@ -1,0 +1,99 @@
+html {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    padding: 12px;
+    margin: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #2b2b2b;
+    color: rgba(195, 204, 211, 1);
+    box-sizing: border-box;
+}
+
+.form-group {
+    margin-bottom: 24px;
+    max-width: 800px;
+    width: 100%;
+    display: flex;
+    input {
+        color: rgba(195, 204, 211, 1);
+        padding: 12px;
+        border: 1px solid rgba(73, 255, 164, 0.9);
+        background-color: rgba(255, 255, 255, 0.05);
+        width: 100%;
+        border-radius: 6px;
+    }
+}
+
+.actions {
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 24px;
+    .button {
+        padding: 12px 24px;
+        font-weight: bold;
+        color: white;
+        background-color: #2da368;
+        text-decoration: none;
+        border-radius: 6px;
+        box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.4);
+        transition: 0.3s ease;
+        cursor: pointer;
+        text-align: center;
+        &:not(:last-child) {
+            margin-right: 24px;
+        }
+        &.disabled {
+            filter: grayscale(80);
+            opacity: 0.3;
+            transform: scale(0.9);
+            pointer-events: none;
+        }
+        &:not(.disabled):hover {
+            background-color: #39ce83;
+            box-shadow: 0px 0px 16px rgba(73, 255, 164, 0.9);
+            transform: scale(1.05);
+        }
+        &:not(.disabled):active {
+            transform: scale(0.95);
+        }
+        &.loading {
+            pointer-events: none;
+            transition: inherit;
+            animation: loading 2s infinite;
+        }
+    }
+}
+
+#json {
+    padding: 12px;
+    max-width: 800px;
+    height: 100%;
+    width: 100%;
+    max-height: 50vh;
+    overflow: auto;
+    background: #2b2b2b;
+    color: rgba(195, 204, 211, 1);
+    border: 1px solid rgba(73, 255, 164, 0.9);
+    resize: none;
+    border-radius: 6px;
+    background-color: rgba(255, 255, 255, 0.05);
+    transition: 0.5s ease;
+    &.error {
+        border-color: rgba(252, 55, 130, 0.9);
+        background-color: rgba(252, 55, 130, 0.1);
+    }
+    &:hover {
+        cursor: default;
+    }
+}
+
+@import "./abstract/animations";
