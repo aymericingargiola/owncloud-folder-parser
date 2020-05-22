@@ -1,5 +1,8 @@
 @import "./abstract/vars";
-@import "./abstract/icons";
+
+.test {
+    background-image: url(simpleIcon());
+}
 
 * {
     box-sizing: border-box;
@@ -45,7 +48,7 @@ body {
         border-radius: 6px;
         transition: 0.5s ease;
         &:focus {
-            box-shadow: 0px 0px 15px rgba(73, 255, 164, 0.4);
+            box-shadow: 0px 0px 15px color($color: lighter-purple, $opacity: 0.5);
         }
     }
 }
@@ -58,7 +61,7 @@ body {
         padding: 12px 24px;
         font-weight: bold;
         color: white;
-        background-color: #2da368;
+        background-color: color($color: purple);
         text-decoration: none;
         border-radius: 6px;
         box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.4);
@@ -75,8 +78,8 @@ body {
             pointer-events: none;
         }
         &:not(.disabled):hover {
-            background-color: #39ce83;
-            box-shadow: 0px 0px 16px rgba(73, 255, 164, 0.9);
+            background-color: color($color: lighter-purple);
+            box-shadow: 0px 0px 16px color($color: purple, $opacity: 0.9);
             transform: scale(1.05);
         }
         &:not(.disabled):active {
@@ -146,7 +149,7 @@ body {
         width: 50px;
         height: 50px;
         background-color: black;
-        background-image: url($icon-chevron-right);
+        background-image: url(simpleIcon($icon: chevron-right, $color: darker));
         background-position: center;
         background-size: 50%;
         background-repeat: no-repeat;
@@ -154,7 +157,7 @@ body {
         transition: 0.5s ease;
         box-shadow: -8px 4px 15px rgba(0, 0, 0, 0.3);
         border-top-left-radius: 6px;
-        border-bottom-left-radius: 6px;;
+        border-bottom-left-radius: 6px;
         &.disabled {
             opacity: 0;
             pointer-events: none;
@@ -166,7 +169,7 @@ body {
             height: 100%;
             top: 0;
             left: 0;
-            background-image: url($icon-chevron-right-green);
+            background-image: url(simpleIcon($icon: chevron-right, $color: lighter-purple));
             background-position: center;
             background-size: 50%;
             background-repeat: no-repeat;
@@ -181,9 +184,9 @@ body {
         }
     }
     .show-button {
-        background-image: url($icon-chevron-left);
+        background-image: url(simpleIcon($icon: chevron-left, $color: darker));
         &::after {
-            background-image: url($icon-chevron-left-green);
+            background-image: url(simpleIcon($icon: chevron-left, $color: lighter-purple));
         }
     }
     .item-list-content {
@@ -250,7 +253,7 @@ body {
                             width: 50px;
                             height: 50px;
                             background: rgba(255, 255, 255, 0.05);
-                            background-image: url($icon-document);
+                            background-image: url(simpleIcon($icon: document, $color: lighter-purple));
                             background-position: center;
                             background-size: 50%;
                             background-repeat: no-repeat;
@@ -265,7 +268,7 @@ body {
                                 height: 100%;
                                 top: 0;
                                 left: 0;
-                                background-image: url($icon-document-green);
+                                background-image: url(simpleIcon($icon: document, $color: darker));
                                 background-position: center;
                                 background-size: 50%;
                                 background-repeat: no-repeat;
@@ -276,9 +279,9 @@ body {
                             &[data-type="ogg"],
                             &[data-type="wav"],
                             &[data-type="flac"] {
-                                background-image: url($icon-music);
+                                background-image: url(simpleIcon($icon: music, $color: darker));
                                 &::after {
-                                    background-image: url($icon-music-green);
+                                    background-image: url(simpleIcon($icon: music, $color: lighter-purple));
                                 }
                             }
                             &[data-type="zip"],
@@ -287,9 +290,9 @@ body {
                             &[data-type="tar"],
                             &[data-type="7z"],
                             &[data-type="wim"] {
-                                background-image: url($icon-zip);
+                                background-image: url(simpleIcon($icon: zip, $color: darker));
                                 &::after {
-                                    background-image: url($icon-zip-green);
+                                    background-image: url(simpleIcon($icon: zip, $color: lighter-purple));
                                 }
                             }
                         }
@@ -300,7 +303,7 @@ body {
                     }
                 }
                 &:hover {
-                    box-shadow: 0px 0px 15px rgba(73, 255, 164, 0.4);
+                    box-shadow: 0px 0px 15px color($color: lighter-purple, $opacity: 0.5);
                     .item-container {
                         .info-bar {
                             .small-info {
@@ -310,7 +313,7 @@ body {
                         }
                         .item-content {
                             .image {
-                                box-shadow: 0px 0px 15px rgba(73, 255, 164, 0.4);
+                                box-shadow: 0px 0px 15px color($color: lighter-purple);
                                 &::after {
                                     opacity: 0.7;
                                 }
