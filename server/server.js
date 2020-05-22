@@ -122,22 +122,16 @@ async function getFileList(url) {
     console.time('Files list request');
     while (Object.keys(fileList).length === 0) {
         fileList = await page.evaluateJavaScript('function(){return FileList.files;}');
-        ++timeout
         if (fileList === undefined || fileList === null) {
-            const errorMessage = "File list is not available"
+            const errorMessage = "File list does not exist on this url, or unreachable"
             console.log(errorMessage);
-            return {
-                error: true,
-                message: errorMessage
-            }
+            return globalFunctions.errorRequest(404, errorMessage)
         } else if (timeout === 100) {
-            const timeoutMessage = "There is no files or the file list is unreachable"
-            console.log(timeoutMessage);
-            return {
-                error: true,
-                message: timeoutMessage
-            }
+            const errorMessage = "File list does not respond"
+            console.log(errorMessage);
+            return globalFunctions.errorRequest(404, errorMessage)
         }
+        ++timeout
     }
     console.timeEnd('Files list request');
     console.time('Attach download urls');
@@ -159,7 +153,13 @@ server.route({
     method: 'POST',
     path: '/parser/filelist',
     handler: function (request, h) {
-        return getFileList(request.payload).then((result) => { return result });
+        return getFileList(request.payload).then((result) => {
+            if (result.error) {
+                return h.response(result).code(result.status);
+            } else {
+                return h.response(result).code(200);
+            }
+        });
     }
 });
 

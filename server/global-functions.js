@@ -21,9 +21,16 @@ module.exports = {
         return `${date}/${month}/${year} ${hours}:${minutes}:${seconds}`;
     },
     bytesToSize: function (bytes) {
-        var sizes = ['Bytes', 'Kb', 'Mb', 'Gb', 'Tb'];
+        const sizes = ['Bytes', 'Kb', 'Mb', 'Gb', 'Tb'];
         if (bytes == 0) return '0 Byte';
         var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
         return parseFloat((bytes / Math.pow(1024, i)).toFixed(2)) + ' ' + sizes[i];
+    },
+    errorRequest: function (code, message) {
+        return {
+            error: true,
+            status: code,
+            message: message
+        }
     }
 };
