@@ -1,0 +1,12 @@
+@use "sass:string";
+
+@function simpleIcon($icon: music, $color: purple) {
+    $thisIcon: map-get(map-get($simpleIcons, $icon), start) + "rgba(" + map-get($colors, $color) + ", 0.999)" +
+        map-get(map-get($simpleIcons, $icon), end);
+    @return $thisIcon;
+}
+
+@function color($color: dark, $opacity: 1) {
+    $thisColor: "rgba(" + map-get($colors, $color) + "," + $opacity + ")";
+    @return unquote($thisColor);
+}

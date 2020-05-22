@@ -19,17 +19,8 @@ function bytesToSize(bytes) {
     return parseFloat((bytes / Math.pow(1024, i)).toFixed(2)) + ' ' + sizes[i];
 }
 
-{/* <div class="info-bar">
-    <span class="small-info extension">mp3</span><span class="small-info size">16kb</span>
-</div>
-    <div class="item-content">
-        <div class="image"></div>
-        <div class="info">
-            <span>Name</span>
-        </div>
-    </div> */}
-
 function createItems(fileList) {
+    var newRequest = false;
     fileList.forEach(function (item, index) {
         var itemTemplate = document.createElement("li");
         itemTemplate.classList.add("item");
@@ -46,7 +37,11 @@ function createItems(fileList) {
                 </div>
             </a>`;
         setTimeout(function () {
-            itemList.appendChild(itemTemplate);
+            if (itemList.classList.contains("processing") && !newRequest) {
+                itemList.appendChild(itemTemplate);
+            } else {
+                newRequest = true;
+            }
         }, 100 * index);
     });
 }
@@ -59,13 +54,19 @@ function getFileList() {
     request.setRequestHeader("Content-type", "application/json; charset=utf-8");
     request.onload = function () {
         fileList = JSON.parse(this.response);
+        if (fileList.error) {
+            jsonPlaceholder.classList.add("error");
+            jsonPlaceholder.value = fileList.message;
+            generateButton.classList.remove("loading");
+            return
+        }
         itemsNumber = fileList.length;
         fullSize = bytesToSize(fileList.reduce((a, b) => ({ bytes: a.bytes + b.bytes })).bytes);
         jsonPlaceholder.classList.remove("error");
         jsonPlaceholder.value = JSON.stringify(fileList, undefined, 1);
         generateButton.classList.remove("loading");
-        var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(fileList));
-        dlButton.setAttribute("href", dataStr);
+        itemList.classList.add("processing");
+        dlButton.setAttribute("href", "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(fileList)));
         dlButton.setAttribute("download", "fileList.json");
         dlButton.classList.remove("disabled");
         itemListContainer.classList.add("visible");
@@ -81,7 +82,7 @@ function getFileList() {
     request.send(params);
 }
 
-generateButton.onclick = function () { getFileList(); this.classList.add("loading"); }
+generateButton.onclick = function () { getFileList(); this.classList.add("loading"); itemList.classList.remove("processing"); itemList.innerHTML = ""; }
 openLinkButton.onclick = function () { window.open(urlInput.value); }
 hideItemListButton.onclick = function () { itemListContainer.classList.remove("visible"); hideItemListButton.classList.add("disabled"); showItemListButton.classList.remove("disabled"); }
 showItemListButton.onclick = function () { itemListContainer.classList.add("visible"); hideItemListButton.classList.remove("disabled"); showItemListButton.classList.add("disabled"); }

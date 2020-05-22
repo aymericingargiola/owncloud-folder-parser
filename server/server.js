@@ -111,16 +111,34 @@ function buildJson(filelist) {
 async function getFileList(url) {
     console.group("\nRequest: " + globalFunctions.dateDisplay());
     console.time("Time")
-    let filelist;
+    var fileList = {};
+    var timeout = 0;
     const thisUrl = new URL(url.url);
     console.time('Page loading');
     const instance = await phantom.create();
     const page = await instance.createPage();
     await page.open(url.url);
-    await globalFunctions.sleep(1000);
     console.timeEnd('Page loading');
     console.time('Files list request');
-    fileList = await page.evaluateJavaScript('function(){return FileList.files;}');
+    while (Object.keys(fileList).length === 0) {
+        fileList = await page.evaluateJavaScript('function(){return FileList.files;}');
+        ++timeout
+        if (fileList === undefined || fileList === null) {
+            const errorMessage = "File list is not available"
+            console.log(errorMessage);
+            return {
+                error: true,
+                message: errorMessage
+            }
+        } else if (timeout === 100) {
+            const timeoutMessage = "There is no files or the file list is unreachable"
+            console.log(timeoutMessage);
+            return {
+                error: true,
+                message: timeoutMessage
+            }
+        }
+    }
     console.timeEnd('Files list request');
     console.time('Attach download urls');
     fileList.forEach(function (item) {

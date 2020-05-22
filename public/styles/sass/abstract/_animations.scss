@@ -3,22 +3,24 @@
         opacity: 1;
         filter: grayscale(0%);
         transform: scale(1);
-        box-shadow: 0px 0px 16px rgba(73, 255, 164, 0.9);
+        background-color: color($color: lighter-purple);
+        box-shadow: 0px 0px 16px color($color: purple, $opacity: 0.9);
     }
 
     50% {
         opacity: 0.2;
         filter: grayscale(100%);
         transform: scale(0.9);
-        background-color: #39ce83;
-        box-shadow: 0px 0px 0px rgba(73, 255, 164, 0);
+        background-color: color($color: lighter-purple);
+        box-shadow: 0px 0px 0px color($color: purple, $opacity: 0);
     }
 
     100% {
         opacity: 1;
         filter: grayscale(20%);
         transform: scale(1);
-        box-shadow: 0px 0px 16px rgba(73, 255, 164, 0.9);
+        background-color: color($color: lighter-purple);
+        box-shadow: 0px 0px 16px color($color: purple, $opacity: 0.9);
     }
 }
 
