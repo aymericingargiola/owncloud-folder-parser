@@ -32,6 +32,6 @@ Run server only :
 
     $ node server/server.js --server
 
-Run write json to disk only :
+Write json only :
 
     $ node server/server.js --write-json
