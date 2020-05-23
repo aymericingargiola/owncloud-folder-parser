@@ -33,11 +33,11 @@ You can configure `server\config.json` :
 Init :
 
     $ npm i
-    $ node server/server.js
+    $ node server/server.js --env-local
     
 Run server only :
 
-    $ node server/server.js --server
+    $ node server/server.js --server --env-local
 
 Write json only :
 

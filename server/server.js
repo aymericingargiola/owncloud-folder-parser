@@ -1,5 +1,5 @@
-const path = require("path");
 const fs = require('fs');
+const path = require("path");
 const URL = require('url').URL;
 const phantom = require("phantom");
 const Hapi = require('hapi');
@@ -7,11 +7,12 @@ const inquirer = require('inquirer');
 const open = require('open');
 const globalFunctions = require('./global-functions');
 const config = require('./config.json');
-
 const host = config.serverSettings.host;
 const port = config.serverSettings.port;
 const tlsKey = config.serverSettings.tls.key;
 const tlsCert = config.serverSettings.tls.cert;
+const tlsKeyExist = globalFunctions.fileExist(tlsKey);
+const tlsCertExist = globalFunctions.fileExist(tlsCert);
 const corsOrigin = config.serverSettings.cors.origin;
 const defaultUrl = config.userSettings.defaultUrl;
 const saveJsonPath = config.userSettings.saveJsonPath;
@@ -21,7 +22,7 @@ const thumbnailExtension = config.userSettings.thumbnail.extension;
 const server = Hapi.Server({
     host: host,
     port: port,
-    tls: globalFunctions.fileExist(tlsKey) && globalFunctions.fileExist(tlsCert) ? { key: fs.readFileSync(tlsKey), cert: fs.readFileSync(tlsCert) } : undefined
+    tls: tlsKeyExist && tlsCertExist && process.argv[3] != process.argv.filter(arg => arg === "--env-local").length > 0 ? { key: fs.readFileSync(tlsKey), cert: fs.readFileSync(tlsCert) } : undefined
 });
 
 /**
@@ -232,7 +233,7 @@ function runPrompt() {
 server.route({
     config: {
         cors: {
-            origin: corsOrigin.length != 0 ? JSON.stringify(corsOrigin) : ['*'],
+            origin: corsOrigin.length != 0 ? JSON.stringify(corsOrigin) : ["*"],
             additionalHeaders: ["cache-control", "x-requested-with"]
         }
     },
