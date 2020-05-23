@@ -35,14 +35,9 @@ module.exports = {
         }
     },
     fileExist: function (filePath) {
-        if (filePath != "" && filePath.lastIndexOf(".") != -1 && filePath.lastIndexOf(".") != 0) {
-            try {
-                fs.existsSync(filePath);
-                return true
-            } catch (err) {
-                return false
-            }
-        } else {
+        try {
+            return fs.existsSync(filePath);
+        } catch (err) {
             return false
         }
     }
