@@ -10,11 +10,18 @@ const config = require('./config.json');
 
 const host = config.serverSettings.host;
 const port = config.serverSettings.port;
+const tlsKey = config.serverSettings.tls.key;
+const tlsCert = config.serverSettings.tls.cert;
 const defaultUrl = config.userSettings.defaultUrl;
 const saveJsonPath = config.userSettings.saveJsonPath;
 const thumbnailPath = config.userSettings.thumbnail.path;
 const thumbnailExtension = config.userSettings.thumbnail.extension;
-const server = Hapi.Server({ host: host, port: port });
+
+const server = Hapi.Server({
+    host: host,
+    port: port,
+    tls: globalFunctions.fileExist(tlsKey) && globalFunctions.fileExist(tlsCert) ? { key: fs.readFileSync(tlsKey), cert: fs.readFileSync(tlsCert) } : undefined
+});
 
 /**
   * @desc This function will write the json file on specified path from "saveJsonPath" in config.json,
@@ -24,9 +31,9 @@ const server = Hapi.Server({ host: host, port: port });
 function writeJson(newFileList) {
     fs.writeFile(saveJsonPath, JSON.stringify(newFileList), function (error) {
         if (error) {
-            console.error("\nError:  " + error.message);
+            console.error("Error:  " + error.message);
         } else {
-            console.log("\nFile writed on " + path.resolve(saveJsonPath));
+            console.log("File writed on " + path.resolve(saveJsonPath));
         }
     });
 }
