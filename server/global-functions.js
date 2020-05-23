@@ -1,12 +1,4 @@
 module.exports = {
-    sleep: function (ms) {
-        return new Promise(r => setTimeout(r, ms))
-    },
-    asyncForEach: async function (array, callback) {
-        for (let index = 0; index < array.length; index++) {
-            await callback(array[index], index, array);
-        }
-    },
     IntTwoChars: function (i) {
         return (`0${i}`).slice(-2);
     },
@@ -27,10 +19,18 @@ module.exports = {
         return parseFloat((bytes / Math.pow(1024, i)).toFixed(2)) + ' ' + sizes[i];
     },
     errorRequest: function (code, message) {
+        console.warn("\x1b[31m", message, "\x1b[0m");
         return {
             error: true,
             status: code,
             message: message
+        }
+    },
+    initOptions: function (runServerParam = true, openBuiParam = false, checkFilesParam = false) {
+        return {
+            runServer: runServerParam,
+            openBui: openBuiParam,
+            checkFiles: checkFilesParam,
         }
     }
 };
