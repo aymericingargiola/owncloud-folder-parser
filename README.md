@@ -25,7 +25,13 @@ You can configure `server\config.json` :
 
 Init :
 
-    npm i
-    node server/server.js
+    $ npm i
+    $ node server/server.js
     
+Run server only :
 
+    $ node server/server.js --server
+
+Run write json to disk only :
+
+    $ node server/server.js --write-json
