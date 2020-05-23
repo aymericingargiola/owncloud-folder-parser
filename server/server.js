@@ -22,7 +22,7 @@ const thumbnailExtension = config.userSettings.thumbnail.extension;
 const server = Hapi.Server({
     host: host,
     port: port,
-    tls: tlsKeyExist && tlsCertExist && process.argv[3] != process.argv.filter(arg => arg === "--env-local").length > 0 ? { key: fs.readFileSync(tlsKey), cert: fs.readFileSync(tlsCert) } : undefined
+    tls: tlsKeyExist && tlsCertExist && process.argv[3] != process.argv.filter(arg => arg === "--env-local").length === 0 ? { key: fs.readFileSync(tlsKey), cert: fs.readFileSync(tlsCert) } : undefined
 });
 
 /**
