@@ -11,8 +11,6 @@ const host = config.serverSettings.host;
 const port = config.serverSettings.port;
 const tlsKey = config.serverSettings.tls.key;
 const tlsCert = config.serverSettings.tls.cert;
-const tlsKeyExist = globalFunctions.fileExist(tlsKey);
-const tlsCertExist = globalFunctions.fileExist(tlsCert);
 const corsOrigin = config.serverSettings.cors.origin;
 const defaultUrl = config.userSettings.defaultUrl;
 const saveJsonPath = config.userSettings.saveJsonPath;
@@ -22,7 +20,7 @@ const thumbnailExtension = config.userSettings.thumbnail.extension;
 const server = Hapi.Server({
     host: host,
     port: port,
-    tls: tlsKeyExist && tlsCertExist && process.argv[3] != process.argv.filter(arg => arg === "--env-local").length === 0 ? { key: fs.readFileSync(tlsKey), cert: fs.readFileSync(tlsCert) } : undefined
+    tls: globalFunctions.fileExist(tlsKey) && globalFunctions.fileExist(tlsCert) && process.argv.filter(arg => arg === "--env-local").length === 0 ? { key: fs.readFileSync(tlsKey), cert: fs.readFileSync(tlsCert) } : undefined
 });
 
 /**
@@ -46,15 +44,8 @@ function writeJson(newFileList) {
 */
 function checkFiles(newFileList) {
     if (newFileList.error) {
-        return console.log("New file list return error");
-    }
-    let fileExist;
-    try {
-        fileExist = fs.existsSync(saveJsonPath);
-    } catch (err) {
-        fileExist = false;
-    }
-    if (fileExist && saveJsonPath != "") {
+        return console.log("New file list request returned an error");
+    } else if (globalFunctions.fileExist(saveJsonPath) && saveJsonPath != "") {
         console.group("\File list already exist, check files:");
         console.time("Time");
         var newFiles = 0;
