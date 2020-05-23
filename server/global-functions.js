@@ -1,3 +1,4 @@
+const fs = require('fs');
 module.exports = {
     IntTwoChars: function (i) {
         return (`0${i}`).slice(-2);
@@ -31,6 +32,18 @@ module.exports = {
             runServer: runServerParam,
             openBui: openBuiParam,
             checkFiles: checkFilesParam,
+        }
+    },
+    fileExist: function (filePath) {
+        if (filePath != "" && filePath.lastIndexOf(".") != -1 && filePath.lastIndexOf(".") != 0) {
+            try {
+                fs.existsSync(filePath);
+                return true
+            } catch (err) {
+                return false
+            }
+        } else {
+            return false
         }
     }
 };

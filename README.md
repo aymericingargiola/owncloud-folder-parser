@@ -19,7 +19,14 @@ You can configure `server\config.json` :
         },
         "serverSettings": {
             "host": "127.0.0.1", //server host for browser interface
-            "port": "1337" //server port for browser interface
+            "port": "1337" //server port for browser interface,
+            "tls": {
+                "key": "./server/cert/privkey.pem", //privkey for ssl https access
+                "cert": "./server/cert/cert.pem" //cert for ssl https access
+            },
+            "cors": {
+                "origin": [] //array of origins for secure external access
+            }
         }
     }
 
