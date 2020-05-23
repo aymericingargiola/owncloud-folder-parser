@@ -15,6 +15,9 @@
         "tls": {
             "key": "./server/cert/privkey.pem",
             "cert": "./server/cert/cert.pem"
+        },
+        "cors": {
+            "origin": []
         }
     }
 }

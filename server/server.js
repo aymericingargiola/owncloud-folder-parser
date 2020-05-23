@@ -12,6 +12,7 @@ const host = config.serverSettings.host;
 const port = config.serverSettings.port;
 const tlsKey = config.serverSettings.tls.key;
 const tlsCert = config.serverSettings.tls.cert;
+const corsOrigin = config.serverSettings.cors.origin;
 const defaultUrl = config.userSettings.defaultUrl;
 const saveJsonPath = config.userSettings.saveJsonPath;
 const thumbnailPath = config.userSettings.thumbnail.path;
@@ -231,8 +232,8 @@ function runPrompt() {
 server.route({
     config: {
         cors: {
-            origin: ['*'],
-            additionalHeaders: ['cache-control', 'x-requested-with']
+            origin: corsOrigin.length != 0 ? JSON.stringify(corsOrigin) : ['*'],
+            additionalHeaders: ["cache-control", "x-requested-with"]
         }
     },
     method: 'POST',
@@ -244,7 +245,6 @@ server.route({
         });
     }
 });
-
 
 /**
   * @desc Check if command line contains a first parameter
